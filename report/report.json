@@ -1,0 +1,29 @@
+[
+  {
+    "Month": "07",
+    "Year": "2022",
+    "Info": 32,
+    "Warning": 6,
+    "Error": 10,
+    "WarningChangePct": null,
+    "ErrorChangePct": null
+  },
+  {
+    "Month": "08",
+    "Year": "2022",
+    "Info": 34,
+    "Warning": 9,
+    "Error": 4,
+    "WarningChangePct": 50.0,
+    "ErrorChangePct": -60.0
+  },
+  {
+    "Month": "09",
+    "Year": "2022",
+    "Info": 25,
+    "Warning": 8,
+    "Error": 5,
+    "WarningChangePct": -11.11,
+    "ErrorChangePct": 25.0
+  }
+]

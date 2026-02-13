@@ -51,29 +51,34 @@ foreach ($file in $files) {
         }
     }
 }
+#check if report dir exists
+$reportDir = Join-Path $PWD "report" 
+if (!(Test-Path $reportDir)){
+    New-Item -ItemType Directory -path $reportDir | Out-Null
+}
+$monthStats = @()
 
-Write-Host "`n============Log Analysis============"
-
-$logfiles = Get-ChildItem -Path $logsFolder -File
+$logfiles = Get-ChildItem -Path $logsFolder -File | Sort-Object Name
 
 foreach ($Log in $logfiles){
-    Write-Host "Analysing $($Log.Name)..."
-    #skips bvlank lines and gets the first line with content to extract month and year
     $lines = Get-Content $log.FullName
+    #skips bvlank lines and gets the first line with content to extract month and year
     $firstNonEmpty = $lines | Where-Object {$_.Trim() -ne ""} | Select-Object -First 1
     if ($firstNonEmpty){
         $fields = $firstNonEmpty -split ","
         if ($fields.Count -gt 0){
             $dateString = $fields[0].Trim()
             $year, $month, $null = $dateString -split "-"
-            $monthYear = "$month/$year"
         }
         else{
-            $monthYear = "unknown"
+            $month = "unknown"
+            $year = "unknown"
         }
     }else{
-        $monthYear = "unknown"
+        $month = "unknown"
+        $year = "unknown"
     }
+    
     $infoCount = 0 
     $errorCount = 0
     $warningCount = 0
@@ -89,8 +94,41 @@ foreach ($Log in $logfiles){
             }
         }
     }
-    Write-Host "Month/Year: $monthYear"
-    Write-Host "Information Messages: $infoCount"
-    Write-Host "Warning Messages : $warningCount"
-    Write-Host "Error Messages : $errorCount"
+    $monthStats += [PSCustomObject]@{
+        Month = $month
+        Year = $year
+        Info = $infoCount
+        Warning = $warningCount
+        Error = $errorCount
+    }
 }
+#percentage increase/decreasse vs previous month
+for ($i=0; $i -lt $monthStats.Count; $i++){
+    if ($i -eq 0){
+        $monthStats[$i] | Add-Member -NotePropertyName 'WarningChangePct' -NotePropertyValue $null
+        $monthStats[$i] | Add-Member -NotePropertyName 'ErrorChangePct' -NotePropertyValue $null
+    }else{
+        $prev = $monthStats[$i -1] 
+        $curr = $monthStats[$i]
+        #handle divide by zero for starting months
+        if ($prev.Warning -eq 0) {
+            $warnPct = $null
+        }else{
+            $warnPct = [math]::Round((($curr.Warning - $prev.Warning) /$prev.Warning) * 100,2)
+        }
+        if ($prev.Error -eq 0){
+            $errorPct = $null
+        }else{
+            $errorPct = [math]::Round((($curr.Error - $prev.Error) / $prev.Error) *100,2)
+        }
+        $curr | Add-Member -NotePropertyName 'WarningChangePct' -NotePropertyValue $warnPct
+        $curr | Add-Member -NotePropertyName 'ErrorChangePct' -NotePropertyValue $errorPct
+
+    }
+
+}
+#output to JSON in ./report/report.json
+$reportPath = Join-Path $reportDir "report.json"
+$monthStats | ConvertTo-Json -Depth 3 | Set-Content -Path $reportPath
+
+Write-Host "Report generated at $reportPath"
