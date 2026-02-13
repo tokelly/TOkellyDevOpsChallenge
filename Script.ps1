@@ -78,7 +78,7 @@ foreach ($Log in $logfiles){
         $month = "unknown"
         $year = "unknown"
     }
-    
+
     $infoCount = 0 
     $errorCount = 0
     $warningCount = 0
@@ -127,8 +127,69 @@ for ($i=0; $i -lt $monthStats.Count; $i++){
     }
 
 }
-#output to JSON in ./report/report.json
+#path to JSON and HTML report
 $reportPath = Join-Path $reportDir "report.json"
+$htmlPath = Join-Path $reportDir "index.html"
+
+# Write JSON first
 $monthStats | ConvertTo-Json -Depth 3 | Set-Content -Path $reportPath
 
-Write-Host "Report generated at $reportPath"
+# Read from report.json
+$stats = Get-Content -Path $reportPath | ConvertFrom-Json
+
+$html = @"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Monthly Log Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        h1 { color: #222; }
+        table { border-collapse: collapse; width: 100%; margin-top: 1em; }
+        th, td { padding: 0.55em; border: 1px solid #ddd; text-align: left; }
+        th { background: #eeeeee; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .pct { color: #666; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Monthly Log Stats</h1>
+    <table>
+        <tr>
+            <th>Month</th>
+            <th>Year</th>
+            <th>Info Count</th>
+            <th>Warning Count</th>
+            <th>Error Count</th>
+            <th>Warning Change %</th>
+            <th>Error Change %</th>
+        </tr>
+"@
+
+foreach ($stat in $stats) {
+    $warnPct = $stat.WarningChangePct
+    $errorPct = $stat.ErrorChangePct
+
+    if ($warnPct -eq $null) { $warnPctDisplay = "-" } else { $warnPctDisplay = "$warnPct%" }
+    if ($errorPct -eq $null) { $errorPctDisplay = "-" } else { $errorPctDisplay = "$errorPct%" }
+
+    $html += "<tr>
+        <td>$($stat.Month)</td>
+        <td>$($stat.Year)</td>
+        <td>$($stat.Info)</td>
+        <td>$($stat.Warning)</td>
+        <td>$($stat.Error)</td>
+        <td class='pct'>$warnPctDisplay</td>
+        <td class='pct'>$errorPctDisplay</td>
+    </tr>`n"
+}
+$html += @"
+    </table>
+    <p style='margin-top:2rem;color:#888;'>Report generated on $(Get-Date -Format "yyyy-MM-dd HH:mm:ss").</p>
+</body>
+</html>
+"@
+
+$html | Set-Content -Path $htmlPath -Encoding UTF8
+Write-Host "HTML report generated at $htmlPath"
