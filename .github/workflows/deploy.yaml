@@ -11,6 +11,10 @@ jobs:
     steps: 
       - name: checkout repository
         uses: actions/checkout@v4
+      
+      - name: Run PowerShell script to generate report
+        shell: pwsh
+        run: pwsh ./Script.ps1
 
       - name: Setup pages
         uses: actions/configure-pages@v4
