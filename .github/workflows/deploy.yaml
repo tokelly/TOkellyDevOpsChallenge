@@ -1,0 +1,24 @@
+name: Deploy report to Github pages
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs: 
+  deploy: 
+    rund-on: ubuntu-latest
+    steps: 
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload report folder
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: report
+      - name: Deploy to Github pages
+        id: deployment
+        uses: actions/deploy-pages@v4
