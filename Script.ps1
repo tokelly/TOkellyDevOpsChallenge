@@ -171,8 +171,8 @@ foreach ($stat in $stats) {
     $warnPct = $stat.WarningChangePct
     $errorPct = $stat.ErrorChangePct
 
-    if ($warnPct -eq $null) { $warnPctDisplay = "-" } else { $warnPctDisplay = "$warnPct%" }
-    if ($errorPct -eq $null) { $errorPctDisplay = "-" } else { $errorPctDisplay = "$errorPct%" }
+    if ($null -eq $warnPct) { $warnPctDisplay = "-" } else { $warnPctDisplay = "$warnPct%" }
+    if ($null -eq $errorPct) { $errorPctDisplay = "-" } else { $errorPctDisplay = "$errorPct%" }
 
     $html += "<tr>
         <td>$($stat.Month)</td>
