@@ -92,6 +92,21 @@ After the script completes, open the report:
 - For each step, I tested with sample data and added error handling to make the script resilient.
 - I iteratively improved the script, refactoring for readability and maintainability, and validated the output at each stage.
 
+## Live report
+ 
+[View the Report on GitHub Pages](https://tokelly.github.io/TOkellyDevOpsChallenge/report/index.html)
+
+---
+
+## Deployment
+
+This project uses **GitHub Actions** to automatically deploy the static report to [GitHub Pages](https://pages.github.com/):
+
+- On every push to the `main` branch, a workflow runs in `.github/workflows/deploy.yaml`.
+- The workflow checks out the repository, runs the PowerShell script to generate the `report` folder, and then publishes the contents of `report/` to GitHub Pages.
+- No manual deployment is needed—just push your changes and the site updates automatically!
+
+
 ### How I would improve the project
 
 - **Unit Tests:** Add automated tests for each function to catch edge cases and regressions.
