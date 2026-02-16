@@ -94,7 +94,7 @@ After the script completes, open the report:
 
 ## Live report
  
-[View the Report on GitHub Pages](https://tokelly.github.io/TOkellyDevOpsChallenge/report/index.html)
+[View the Report on GitHub Pages](https://tokelly.github.io/TOkellyDevOpsChallenge/)
 
 ---
 
