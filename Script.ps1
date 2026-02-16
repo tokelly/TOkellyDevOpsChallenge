@@ -88,18 +88,6 @@ $monthStats = Get-ChildItem -Path $logsFolder -File | Sort-Object Name | ForEach
         Error   = $errorCount
     }
 }
-#counting logs using pipleine instead of foreach for better readability and performance
-$infoCount = $lines | Where-Object { ($_ -split ",")[1].Trim().ToLower() -eq "info" }    | Measure-Object | Select-Object -ExpandProperty Count
-$warningCount = $lines | Where-Object { ($_ -split ",")[1].Trim().ToLower() -eq "warning" } | Measure-Object | Select-Object -ExpandProperty Count
-$errorCount = $lines | Where-Object { ($_ -split ",")[1].Trim().ToLower() -eq "error" }   | Measure-Object | Select-Object -ExpandProperty Count
-
-$monthStats += [PSCustomObject]@{
-    Month   = $month
-    Year    = $year
-    Info    = $infoCount
-    Warning = $warningCount
-    Error   = $errorCount
-}
 
 #percentage increase/decreasse vs previous month
 for ($i = 0; $i -lt $monthStats.Count; $i++) {
