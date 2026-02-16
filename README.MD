@@ -92,12 +92,6 @@ After the script completes, open the report:
 - For each step, I tested with sample data and added error handling to make the script resilient.
 - I iteratively improved the script, refactoring for readability and maintainability, and validated the output at each stage.
 
-## Live report
- 
-[View the Report on GitHub Pages](https://tokelly.github.io/TOkellyDevOpsChallenge/)
-
----
-
 ## Deployment
 
 This project uses **GitHub Actions** to automatically deploy the static report to [GitHub Pages](https://pages.github.com/):

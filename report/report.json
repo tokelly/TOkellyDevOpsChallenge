@@ -25,5 +25,14 @@
     "Error": 5,
     "WarningChangePct": -11.11,
     "ErrorChangePct": 25.0
+  },
+  {
+    "Month": "09",
+    "Year": "2022",
+    "Info": 25,
+    "Warning": 8,
+    "Error": 5,
+    "WarningChangePct": 0.0,
+    "ErrorChangePct": 0.0
   }
 ]
