@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Monthly Log Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        h1 { color: #222; }
+        table { border-collapse: collapse; width: 100%; margin-top: 1em; }
+        th, td { padding: 0.55em; border: 1px solid #ddd; text-align: left; }
+        th { background: #eeeeee; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .pct { color: #666; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Monthly Log Stats</h1>
+    <table>
+        <tr>
+            <th>Month</th>
+            <th>Year</th>
+            <th>Info Count</th>
+            <th>Warning Count</th>
+            <th>Error Count</th>
+            <th>Warning Change %</th>
+            <th>Error Change %</th>
+        </tr><tr>
+        <td>07</td>
+        <td>2022</td>
+        <td>32</td>
+        <td>6</td>
+        <td>10</td>
+        <td class='pct'>-</td>
+        <td class='pct'>-</td>
+    </tr>
+<tr>
+        <td>08</td>
+        <td>2022</td>
+        <td>34</td>
+        <td>9</td>
+        <td>4</td>
+        <td class='pct'>50%</td>
+        <td class='pct'>-60%</td>
+    </tr>
+<tr>
+        <td>09</td>
+        <td>2022</td>
+        <td>25</td>
+        <td>8</td>
+        <td>5</td>
+        <td class='pct'>-11.11%</td>
+        <td class='pct'>25%</td>
+    </tr>
+    </table>
+    <p style='margin-top:2rem;color:#888;'>Report generated on 2026-02-16 08:43:48.</p>
+</body>
+</html>
