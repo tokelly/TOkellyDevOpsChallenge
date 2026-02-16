@@ -106,6 +106,30 @@ This project uses **GitHub Actions** to automatically deploy the static report t
 - The workflow checks out the repository, runs the PowerShell script to generate the `report` folder, and then publishes the contents of `report/` to GitHub Pages.
 - No manual deployment is needed—just push your changes and the site updates automatically!
 
+## Running the Web App in Docker
+
+1. **Build the Docker image:**
+   ```sh
+   docker build -t log-report-app .
+   ```
+
+2. **Run the container and expose port 8080:**
+   ```sh
+   docker run -d --name log-report-app -p 8080:80 log-report-app
+   ```
+
+3. **Open your browser and visit:**
+   ```
+   http://localhost:8080
+   ```
+   You should see the web app (index.html) served from the container.
+
+4. **To stop and remove the container:**
+   ```sh
+   docker stop log-report-app
+   docker rm log-report-app
+   ```
+
 
 ### How I would improve the project
 
