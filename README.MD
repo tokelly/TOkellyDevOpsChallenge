@@ -124,6 +124,9 @@ This project uses **GitHub Actions** to automatically deploy the static report t
    docker rm log-report-app
    ```
 
+## AI Transcript link
+https://chatgpt.com/share/69958da4-23e0-8008-80e2-31ae5ce1aac0
+
 
 ### How I would improve the project
 
